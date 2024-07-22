@@ -59,11 +59,11 @@ model Asset {
 
   length Int
 
-  postAssets   Post @relation("Assets", fields: [postAssetsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  postAssetsId Int
+  postAssets   Post? @relation("Assets", fields: [postAssetsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postAssetsId Int?
 
-  postThumbnail   Post @relation("Thumbnail", fields: [postThumbnailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  postThumbnailId Int  @unique
+  postThumbnail   Post? @relation("Thumbnail", fields: [postThumbnailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postThumbnailId Int?  @unique
 }
 
 enum AseetType {

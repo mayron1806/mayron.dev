@@ -1,8 +1,8 @@
-import Avatar from "./avatar";
-import CoverImage from "./cover-image";
-import DateFormatter from "./date-formatter";
+import moment from "moment";
 import { PostTitle } from "@/app/_components/post-title";
 import { type Author } from "@/interfaces/author";
+import CoverImage from "./cover-image";
+import Avatar from "./avatar";
 
 type Props = {
   title: string;
@@ -26,7 +26,7 @@ export function PostHeader({ title, coverImage, date, author }: Props) {
           <Avatar name={author.name} picture={author.picture} />
         </div>
         <div className="mb-6 text-lg">
-          <DateFormatter dateString={date} />
+          <time>{moment(date).format("MMMM DD, YYYY")}</time>
         </div>
       </div>
     </>
