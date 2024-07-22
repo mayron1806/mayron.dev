@@ -5,11 +5,87 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+
+  slug String @unique
+
+  thumbnail Asset? @relation("Thumbnail") // Image
+  title     String @unique
+
+  content Content? // Markdown
+
+  assets Asset[] @relation("Assets") // Images, Videos
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  reactions Reaction[]
+
+  likesCount    Int @default(0)
+  dislikesCount Int @default(0)
+
+  @@index([slug])
+  @@index([title])
+}
+
+model Content {
+  id String @id @default(cuid())
+
+  path String
+  ext  String
+
+  length Int
+
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postId Int  @unique
+}
+
+model Asset {
+  id String @id @default(cuid())
+
+  type AseetType
+
+  path String
+  ext  String
+
+  length Int
+
+  postAssets   Post @relation("Assets", fields: [postAssetsId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postAssetsId Int
+
+  postThumbnail   Post @relation("Thumbnail", fields: [postThumbnailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postThumbnailId Int  @unique
+}
+
+enum AseetType {
+  IMAGE
+  VIDEO
+}
+
+model Reaction {
+  id String @id @default(cuid())
+
+  ip String @unique
+
+  type ReactionType
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
+}
+
+enum ReactionType {
+  LIKE
+  DISLIKE
 }
