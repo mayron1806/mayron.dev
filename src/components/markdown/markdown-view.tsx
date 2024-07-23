@@ -2,7 +2,7 @@ import styles from './markdown-styles.module.css';
 
 import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
-import { vsDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 
 type Props = {
@@ -20,7 +20,7 @@ export function MarkdownView({ content }: Props) {
               <SyntaxHighlighter
                 children={String(children).replace(/\n$/, '')}
                 // @ts-ignore
-                style={vsDark}
+                style={dracula}
                 language='js'
                 {...props}
               />
