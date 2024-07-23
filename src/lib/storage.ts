@@ -15,7 +15,7 @@ const putObject = async (file: File, path: string) => {
   
   const uploadFileCommand = new PutObjectCommand({
     Bucket: env.AWS_S3_BUCKET_NAME,
-    Key: path.startsWith('/') ? path : `/${path}`,
+    Key: path.startsWith('/') ? path.slice(1, path.length) : path,
     Body: buffer,
     ContentType: file.type,
   });
@@ -42,8 +42,6 @@ const copyObject = async (from: string, to: string) => {
   await s3.send(copyFileCommand);
 }
 const deleteObjectByPrefix = async (prefix: string) => {
-  console.log(prefix);
-  
   const objectsToDelete = new ListObjectsCommand({
     Bucket: env.AWS_S3_BUCKET_NAME,
     Prefix: prefix

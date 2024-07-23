@@ -1,12 +1,30 @@
-import { storage } from "@/lib/storage";
 import { prisma } from "@/lib/prisma";
+import { Asset, Post } from "@prisma/client";
+import { NextRequest } from "next/server";
 
-export const DELETE = async (request: Request) => {
+export type GetPostListResponse = {
+  data: Array<Post & { thumbnail: Asset }>,
+  nextOffset?: number;
+  lastPage?: boolean;
+}
+export const GET = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
-  const id = Number(searchParams.get('id'));
-
-  const post = await prisma.post.delete({ where: { id } });
-  await storage.deleteObjectByPrefix(`posts/${post.slug}`);
-
-  return new Response(null, { status: 204 });
+  const cursorString = searchParams.get("cursor");
+  const limitString = searchParams.get("limit");
+  const cursor = cursorString ? Number(cursorString) : undefined;
+  const limit = limitString ? Number(limitString) : 10;
+  
+  const posts = await prisma.post.findMany({
+    skip: cursor ? 1 : 0, 
+    cursor: cursor ? { id: cursor } : undefined,
+    take: limit,
+    include: { thumbnail: true },
+    orderBy: { createdAt: 'desc' },
+  });
+  const responseBody: GetPostListResponse = {
+    data: posts as Array<Post & { thumbnail: Asset }>,
+    nextOffset: posts.at(-1)?.id,
+    lastPage: posts.length < limit,
+  };
+  return new Response(JSON.stringify(responseBody), { status: 200, headers: { 'Content-Type': 'application/json' } });
 }

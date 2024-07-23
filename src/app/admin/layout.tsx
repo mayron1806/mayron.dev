@@ -1,4 +1,4 @@
-import { ModeToggle } from "./components/toogle-theme";
+import { ModeToggle } from "../../components/toogle-theme";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return ( 

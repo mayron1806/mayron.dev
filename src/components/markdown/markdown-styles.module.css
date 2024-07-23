@@ -1,0 +1,27 @@
+.markdown {
+  @apply text-lg leading-relaxed;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.markdown p,
+.markdown ul,
+.markdown ol,
+.markdown blockquote {
+  @apply my-6;
+}
+
+.markdown blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic;
+}
+.markdown pre {
+  @apply overflow-scroll;
+}
+.markdown h2 {
+  @apply text-3xl mt-12 mb-4 leading-snug;
+}
+
+.markdown h3 {
+  @apply text-2xl mt-8 mb-4 leading-snug;
+}

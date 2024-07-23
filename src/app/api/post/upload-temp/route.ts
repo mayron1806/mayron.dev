@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
     return new Response("No file found", { status: 400 });
   }
   try {
-    await storage.putObject(fileForm, "temp");
+    await storage.putObject(fileForm, `temp/${fileForm.name}`);
     return new Response(JSON.stringify({ 
       success: true,
       url: `${env.AWS_S3_BUCKET_BASE_URL}/temp/${fileForm.name}`

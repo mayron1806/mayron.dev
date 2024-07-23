@@ -66,6 +66,8 @@ export const createPost = async (prevState: any, formData: FormData) => {
 
     // adicionar assets
     const urls = extractImageURLs(validated.data.content);
+    console.log(urls);
+    
     await Promise.all(urls.map(async (url) => {
       const id = cuid();
       const extension = url.split('.').pop()!;

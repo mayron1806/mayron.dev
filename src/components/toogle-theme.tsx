@@ -12,7 +12,8 @@ export function ModeToggle() {
   return (
     <Button
       size="icon"
-      className="rounded-full p-3 absolute right-0 bottom-0 m-[2rem]"
+      variant="outline"
+      className="rounded-full p-3"
       onClick={() => {
         const targetTheme = theme === 'dark' ? 'light' : 'dark';
         setTheme(targetTheme);
