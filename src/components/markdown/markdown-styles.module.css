@@ -1,5 +1,5 @@
 .markdown {
-  @apply text-lg leading-relaxed;
+  @apply text-base leading-relaxed;
   white-space: -moz-pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word;
@@ -9,7 +9,7 @@
 .markdown ul,
 .markdown ol,
 .markdown blockquote {
-  @apply my-6;
+  @apply my-4;
 }
 
 .markdown blockquote {
@@ -18,10 +18,22 @@
 .markdown pre {
   @apply overflow-scroll;
 }
+.markdown h1 {
+  @apply text-3xl mt-12 mb-4 leading-snug font-bold;
+}
 .markdown h2 {
   @apply text-3xl mt-12 mb-4 leading-snug;
 }
 
 .markdown h3 {
   @apply text-2xl mt-8 mb-4 leading-snug;
+}
+.markdown ol {
+  @apply list-decimal;
+}
+.markdown ul {
+  @apply list-disc;
+}
+.markdown li{
+  @apply translate-x-6;
 }

@@ -2,7 +2,6 @@ import Image from "next/image";
 import moment from "moment";
 import {
   MoreHorizontal,
-  PlusCircle,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -33,6 +32,8 @@ import { prisma } from "@/lib/prisma";
 import { env } from "@/env";
 import DeletePostButton from "./components/delete-post-button";
 import AddPostButton from "./components/add-post-button";
+import Link from "next/link";
+import ViewPostButton from "./components/view-post-button";
 const getPosts = async (page: number = 0, limit: number = 10) => {
   const posts = await prisma.post.findMany({
     skip: page * limit,
@@ -128,6 +129,9 @@ export default async function Dashboard({ searchParams }: Props) {
                               <DropdownMenuLabel>Actions</DropdownMenuLabel>
                               <DropdownMenuItem asChild>
                                 <DeletePostButton postId={post.id} />
+                              </DropdownMenuItem>
+                              <DropdownMenuItem asChild>
+                                <ViewPostButton postSlug={post.slug} />
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
