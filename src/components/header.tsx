@@ -10,12 +10,12 @@ const Header = () => {
         <Link href="/">Mayron.Dev</Link>
       </h1>
       <nav className="flex gap-4">
-        <div className="flex gap-2">
-          <Input placeholder="Pesquisar" type="search" />
+        <form className="flex gap-2" method="GET">
+          <Input placeholder="Pesquisar" type="search" name="search" />
           <Button variant="secondary" size="icon">
             <Search className="h-4 w-4"/>
           </Button>
-        </div>
+        </form>
       </nav>
     </header> 
   );
