@@ -34,14 +34,15 @@ export const createPost = async (prevState: any, formData: FormData) => {
     // criar o thumbnail
     const thumbId = cuid();
     const thumbExtension = validated.data.thumbnail.name.split('.').pop()!;
-    await storage.putObject(validated.data.thumbnail, `posts/${post.slug}/thumbnail/${thumbId}.${thumbExtension}`);
-    const thumbnail = await prisma.asset.create({
+    const thumbPath = `posts/${post.slug}/thumbnail/${thumbId}.${thumbExtension}`
+    await storage.putObject(validated.data.thumbnail, thumbPath);
+    await prisma.asset.create({
       data: {
         id: thumbId,
         ext: thumbExtension,
         type: "IMAGE",
         length: validated.data.thumbnail.size,
-        path: `posts/${post.slug}/thumbnail/${thumbId}.${thumbExtension}`,
+        path: thumbPath,
         postThumbnailId: post.id,
       }
     });
@@ -54,7 +55,7 @@ export const createPost = async (prevState: any, formData: FormData) => {
       'text/markdown',
       `posts/${post.slug}/content`,
     );
-    const content = await prisma.content.create({
+    await prisma.content.create({
       data: {
         id: contentId,
         ext: 'md',
@@ -65,8 +66,7 @@ export const createPost = async (prevState: any, formData: FormData) => {
     });
 
     // adicionar assets
-    const urls = extractImageURLs(validated.data.content);
-    console.log(urls);
+    const urls = extractImageURLs(validated.data.content); // extrai as urls temporarias das imagens presente no mar
     
     await Promise.all(urls.map(async (url) => {
       const id = cuid();
@@ -85,7 +85,7 @@ export const createPost = async (prevState: any, formData: FormData) => {
         }
       });
     }));
-  }, { timeout: 60000 });
+  }, { timeout: 60000, maxWait: 10 * 1000 });
   redirect('/admin');
 }
 const extractImageURLs = (content: string) => {

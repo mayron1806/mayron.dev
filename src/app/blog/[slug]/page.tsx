@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import markdownToHtml from "@/lib/markdownToHtml";
 import { prisma } from "@/lib/prisma";
 import { storage } from "@/lib/storage";
 import Image from "next/image";
@@ -11,6 +10,7 @@ import Share from "@/components/share";
 import Reaction from "@/components/reaction";
 import PostList from "@/components/post-list";
 import { MarkdownView } from "@/components/markdown/markdown-view";
+import { makePath } from "@/utils/make-file-url.server";
 const getPostBySlug = async (slug: string) => {
   const post = await prisma.post.findUnique({
     where: { slug },
@@ -36,7 +36,7 @@ export default async function Post({ params }: Params) {
       <section>
         <div className="w-full mb-6 relative">
           <Image
-            src={storage.makePath(post.thumbnail?.path ?? '')}
+            src={makePath(post.thumbnail?.path ?? '')}
             alt="Thumbnail"
             width={0}
             height={0}
@@ -63,7 +63,7 @@ export default async function Post({ params }: Params) {
       <section className="space-y-4">
         <h2 className="text-3xl font-medium">Leia também</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <PostList cursor={0} />
+          <PostList cursor={0} ignoreIds={[post.id]} />
         </div>
       </section>
     </main>

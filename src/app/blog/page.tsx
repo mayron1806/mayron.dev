@@ -2,9 +2,9 @@ import PostList from "@/components/post-list";
 import PostItem from "@/components/post-list/post-item";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import { storage } from "@/lib/storage";
 import { formatDate } from "@/lib/time-format";
 import { cn } from "@/lib/utils";
+import { makePath } from "@/utils/make-file-url.server";
 import { Asset, Post } from "@prisma/client";
 import "moment/locale/pt-br";
 import Image from "next/image";
@@ -53,9 +53,11 @@ export default async function Index({ searchParams }: Props) {
             }
             <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-20">
               {
-                recentPosts.map((post) => (
-                  <PostItem post={post} key={post.id} />
-                ))
+                recentPosts.map((post) => {
+                  if (post.id === recentPosts[0]?.id) return null;
+                  return <PostItem post={post} key={post.id} />
+                }
+                )
               }
               {
                 recentPosts.length > 0 && (
@@ -102,11 +104,11 @@ const Hero = () => {
 }
 const MainPost = ({ post }: { post: Post & { thumbnail: Asset | null }}) => {
   return (
-    <Link className="block w-full" href={`/${post.slug}`}>
+    <Link className="block w-full" href={`/blog/${post.slug}`}>
       <Card className="flex flex-col md:flex-row items-center border rounded-lg shadow w-full">
         <div className="w-full md:h-auto md:rounded-none md:rounded-s-lg">
           <Image
-            src={storage.makePath(post.thumbnail?.path ?? '')}
+            src={makePath(post.thumbnail?.path ?? '')}
             alt="Cover"
             width={0}
             height={0}

@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <h1 className="text-xl font-bold h-full">
-              <Link href="/">Mayron.Dev</Link>
+              <Link href="/blog">Mayron.Dev</Link>
             </h1>
           </div>
         </div>
@@ -16,7 +16,7 @@ const Footer = () => {
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-muted-foreground sm:text-center">
             © 2024 
-            <Link href="/" className="hover:underline"> Mayron.Dev</Link>. 
+            <Link href="/blog" className="hover:underline"> Mayron.Dev</Link>. 
             Todos direitos reservados.
           </span>
           <div className="flex mt-4 sm:justify-center sm:mt-0">

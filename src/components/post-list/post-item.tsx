@@ -1,19 +1,20 @@
-import { Post } from "@prisma/client";
+import { Asset, Post } from "@prisma/client";
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { formatDate } from "@/lib/time-format";
 import Link from "next/link";
+import { makePath } from "@/utils/make-file-url.client";
 
 type Props = {
-  post: Post
+  post: Post & { thumbnail: Asset | null }
 }
 const PostItem = ({ post }: Props) => {
   return (
-    <Link href={`/${post.slug}`}>
+    <Link href={`/blog/${post.slug}`}>
       <Card key={post.id} className="w-full p-2 cursor-pointer overflow-hidden flex flex-col justify-between">
         <div className="relative min-h-52 h-full w-full flex-1">
           <Image 
-            src="/cover.jpg"
+            src={makePath(post.thumbnail?.path ?? '')}
             alt="Thumbnail"
             fill
             className="object-cover"

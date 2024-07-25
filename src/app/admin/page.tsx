@@ -32,8 +32,8 @@ import { prisma } from "@/lib/prisma";
 import { env } from "@/env";
 import DeletePostButton from "./components/delete-post-button";
 import AddPostButton from "./components/add-post-button";
-import Link from "next/link";
 import ViewPostButton from "./components/view-post-button";
+
 const getPosts = async (page: number = 0, limit: number = 10) => {
   const posts = await prisma.post.findMany({
     skip: page * limit,
@@ -52,6 +52,8 @@ export default async function Dashboard({ searchParams }: Props) {
   const page = Number(searchParams.page) || 0;
   const limit = Number(searchParams.limit) || 10;
   const posts = await getPosts(page, limit);
+  console.log(posts);
+  
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <div className="flex flex-col sm:gap-4 sm:py-4">
