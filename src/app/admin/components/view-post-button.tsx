@@ -11,7 +11,7 @@ const ViewPostButton = forwardRef<HTMLButtonElement, { postSlug: string }>(
         ref={ref}
         variant="ghost"
         className="w-full justify-start"
-        onClick={() => router.push(`/${postSlug}`)}
+        onClick={() => router.push(`/blog/${postSlug}`)}
       >
         Visualizar
       </Button>

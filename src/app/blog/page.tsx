@@ -106,14 +106,14 @@ const MainPost = ({ post }: { post: Post & { thumbnail: Asset | null }}) => {
   return (
     <Link className="block w-full" href={`/blog/${post.slug}`}>
       <Card className="flex flex-col md:flex-row items-center border rounded-lg shadow w-full">
-        <div className="w-full md:h-auto md:rounded-none md:rounded-s-lg">
+        <div className="h-[400px] relative w-full md:rounded-none md:rounded-s-lg">
           <Image
             src={makePath(post.thumbnail?.path ?? '')}
             alt="Cover"
             width={0}
             height={0}
             sizes="100vw"
-            style={{ width: '100%', height: 'auto' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }}
           />
         </div>
         <div className="flex flex-col justify-between p-4 leading-normal">
