@@ -2,18 +2,17 @@ import { Search } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import Link from "next/link";
+import Logo from "./logo";
 
 const Header = () => {
   return ( 
-    <header className="flex justify-between items-center gap-4 p-2 px-4 bg-secondary">
-      <h1 className="text-xl font-bold h-full">
-        <Link href="/blog">Mayron.Dev</Link>
-      </h1>
+    <header className="flex justify-between items-center gap-4 p-2 px-4 bg-background">
+      <Link href="/blog"><Logo /></Link>
       <nav className="flex gap-4">
-        <form className="flex gap-2" method="GET">
+        <form className="flex items-center gap-2" method="GET">
           <Input placeholder="Pesquisar" type="search" name="search" />
-          <Button variant="secondary" size="icon">
-            <Search className="h-4 w-4"/>
+          <Button size="sm" className="h-full">
+            <Search className="h-4 w-4" />
           </Button>
         </form>
       </nav>
