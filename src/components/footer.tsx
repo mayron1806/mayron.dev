@@ -1,18 +1,17 @@
 import Link from "next/link";
 import { Separator } from "./ui/separator";
 import { AiFillInstagram, AiFillLinkedin, AiFillGithub } from "react-icons/ai";
+import Logo from "./logo";
 const Footer = () => {
   return (
-    <footer className="bg-secondary">
+    <footer className="bg-background border-t-[1px] border-t-muted">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <h1 className="text-xl font-bold h-full">
-              <Link href="/blog">Mayron.Dev</Link>
-            </h1>
+            <Link href="/blog"><Logo /></Link>
           </div>
         </div>
-        <Separator className="my-6  sm:mx-auto lg:my-8" />
+        <Separator className="my-6 sm:mx-auto lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-muted-foreground sm:text-center">
             © 2024 

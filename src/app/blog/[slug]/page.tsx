@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { storage } from "@/lib/storage";
 import Image from "next/image";
 import moment from "moment";
-import 'moment/locale/pt-br'
+import 'moment/locale/pt-br';
 import { calculateReadingTime } from "@/lib/read-time";
 import { Separator } from "@/components/ui/separator";
 import Share from "@/components/share";
@@ -11,6 +11,8 @@ import Reaction from "@/components/reaction";
 import PostList from "@/components/post-list";
 import { MarkdownView } from "@/components/markdown/markdown-view";
 import { makePath } from "@/utils/make-file-url.server";
+import { Metadata } from "next";
+
 const getPostBySlug = async (slug: string) => {
   const post = await prisma.post.findUnique({
     where: { slug },
@@ -22,6 +24,24 @@ const getPostBySlug = async (slug: string) => {
     },
   });
   return post;
+}
+export const generateMetadata = async ({ params }: Params) => {
+  const post = await getPostBySlug(params.slug);
+  if (!post) {
+    return notFound();
+  }
+  return {
+    title: post.title,
+    description: post.description,
+    openGraph: {
+      images: [makePath(post.thumbnail?.path ?? '')],
+    },
+    twitter: {
+      images: [makePath(post.thumbnail?.path ?? '')],
+    },
+    authors: [{ name: 'Mayron' }],
+
+  } as Metadata;
 }
 export default async function Post({ params }: Params) {
   const post = await getPostBySlug(params.slug);
@@ -57,7 +77,7 @@ export default async function Post({ params }: Params) {
       <Separator className="my-4"/>
       <div className="flex gap-4 justify-between">
         <Reaction post={post} />
-        <Share shareUrl={"https://ui.shadcn.com/docs/components/popover"} title={post.title}/>
+        <Share shareUrl={`https://mayron.dev/blog/${post.slug}`} title={post.title}/>
       </div>
       <Separator className="my-4"/>
       <section className="space-y-4">
