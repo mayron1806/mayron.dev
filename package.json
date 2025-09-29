@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "mayron.dev",
+  "displayName": "mayron.dev",
+  "description": "My personal website",
+  "version": "0.1.0",
+  "homepage": "https://github.com/core-stack/mayron.dev",
+  "license": "MIT",
+  "scripts": {
+    "dev": "pnpm --parallel -r run dev",
+    "tsc": "pnpm --parallel -r run tsc",
+    "lint": "pnpm --parallel -r run lint",
+    "build": "pnpm --parallel -r run build"
+  },
+  "author": {
+    "name": "Mayron Fernandes",
+    "email": "mayron.g.fernandes@gmail.com",
+    "url": "https://www.linkedin.com/in/mayron-fernandes/"
+  },
+  "packageManager": "pnpm@10.15.1"
+}
